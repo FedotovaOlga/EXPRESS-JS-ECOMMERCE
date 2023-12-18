@@ -1,81 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Product = require('../models/Product')
-// const products = [
-//     {
-//       id: 1000,
-//       title: "Produit 1",
-//       description: "Description du produit 1",
-//       price: 19.99,
-//       category: "Électronique",
-//       imageUrl: "url_image_produit_1.jpg"
-//     },
-//     {
-//       id: 2,
-//       title: "Produit 2",
-//       description: "Description du produit 2",
-//       price: 29.99,
-//       category: "Vêtements",
-//       imageUrl: "url_image_produit_2.jpg"
-//     },
-//     {
-//       id: 3,
-//       title: "Produit 3",
-//       description: "Description du produit 3",
-//       price: 39.99,
-//       category: "Maison",
-//       imageUrl: "url_image_produit_3.jpg"
-//     },
-//     {
-//       id: 4,
-//       title: "Produit 4",
-//       description: "Description du produit 4",
-//       price: 49.99,
-//       category: "Sports",
-//       imageUrl: "url_image_produit_4.jpg"
-//     },
-//     {
-//       id: 5,
-//       title: "Produit 5",
-//       description: "Description du produit 5",
-//       price: 59.99,
-//       category: "Électronique",
-//       imageUrl: "url_image_produit_5.jpg"
-//     },
-//     {
-//       id: 6,
-//       title: "Produit 6",
-//       description: "Description du produit 6",
-//       price: 69.99,
-//       category: "Vêtements",
-//       imageUrl: "url_image_produit_6.jpg"
-//     },
-//     {
-//       id: 7,
-//       title: "Produit 7",
-//       description: "Description du produit 7",
-//       price: 79.99,
-//       category: "Maison",
-//       imageUrl: "url_image_produit_7.jpg"
-//     },
-//     {
-//       id: 8,
-//       title: "Produit 8",
-//       description: "Description du produit 8",
-//       price: 89.99,
-//       category: "Sports",
-//       imageUrl: "url_image_produit_8.jpg"
-//     },
-//     {
-//       id: 9,
-//       title: "Produit 9",
-//       description: "Description du produit 9",
-//       price: 99.99,
-//       category: "Électronique",
-//       imageUrl: "url_image_produit_9.jpg"
-//     }
-//   ];
-  
+const Product = require('../models/Product') 
 
 // home page
 router.get('/', async (req,res)=>{
@@ -133,7 +58,6 @@ let product = await Product.findById(productId);
   }
 })
 router.post('/edit-product', async (req, res)=>{
-  // console.log("edit product", req.body);
   let id = req.body.productId
   console.log(req.body);
   let {title, price} = req.body
@@ -141,16 +65,6 @@ router.post('/edit-product', async (req, res)=>{
   try {
     await Product.findOneAndUpdate({_id : id}, productToModify)
     res.redirect(`/product/${id}`)
-
-    // let productToModify = await Product.findById(productId);
-    // if (!productToModify) {
-    //   console.log('Product to modify not found', err)
-    // }
-    // productToModify.title = req.body.title;
-    // productToModify.price = req.body.price;
-    // await productToModify.save();
-    // res.redirect('/products')
-    // console.log('Produit mis à jour :', productToModify)
   }catch(err){
     console.error('Erreur lors de l\'enregistrement du produit:', err)
   }
@@ -159,13 +73,10 @@ router.post('/edit-product', async (req, res)=>{
 
 // show product by Id
 router.get('/product/:id', async(req, res)=>{
-    // let id = req.params.id
-    // let product = products.find(element => element.id == id)
-    // console.log('id:', req.params.id);
     const productId = req.params.id;
     try{
       let product = await Product.findById(productId);
-      res.render('show-product', {p : product}) // on a fait p : product pour faire un include de la card directement, aprce que dans la card c'était p.title etc.
+      res.render('show-product', {p : product}) // j'ai fait p : product pour faire un include de la card directement, parce que dans la card c'était p.title etc.
     }catch(err){
       console.log('Product not found');
     }
@@ -178,7 +89,6 @@ router.get('/delete-product/:id', async (req, res) => {
     const productId = req.params.id;
     await Product.deleteOne({_id : productId});
     res.redirect('/products')
-   
   } catch (err) {
     console.log('ERROR_Delete-Product', err);
   }
