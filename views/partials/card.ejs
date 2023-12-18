@@ -1,0 +1,14 @@
+<div class="card col-4">
+    <img src="<%= p.thumbnail %>" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title"><%= p.title %></h5>
+      <p class="card-text">
+        <%= p.description%>
+      </p>
+      <h5><%= p.price %>€</h5>
+      <a href="/product/<%= p.id %>" class="btn btn-primary">voir detail ...</a>
+      <a href="/delete-product/<%= p.id %>" class="btn btn-danger">Supprimer</a>
+      <a href="/edit-product/<%= p.id %>" class="btn btn-warning">Modifier</a>
+
+    </div>
+  </div>

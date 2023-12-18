@@ -1,0 +1,11 @@
+<%-include('./partials/header.ejs')  %>
+
+<h1><%= title %> </h1>
+
+<div style="display: flex; flex-wrap: wrap;">
+<% for (let p of products) { %>
+<%-include('./partials/card.ejs', {p})  %>
+<% } %>
+</div>
+
+<%-include('./partials/footer.ejs')  %>
