@@ -29,7 +29,7 @@ router.get('/products', async (req, res)=>{
 })
 
 // création de nouveau produit
-router.get('/new-product', (req, res)=>{ // localhost:3000/new-product
+router.get('/new-product', (req, res)=>{ // localhost:4000/new-product
     res.render('new-product', {title:"Nouveau produit", action: "/new-product"})
 })
 router.post('/new-product', async (req, res)=>{
@@ -79,8 +79,7 @@ router.get('/product/:id', async(req, res)=>{
       res.render('show-product', {p : product}) // j'ai fait p : product pour faire un include de la card directement, parce que dans la card c'était p.title etc.
     }catch(err){
       console.log('Product not found');
-    }
-    
+    }  
 })
 
 // routes: supprimer un produit
