@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const schema = new mongoose.Schema({
-    _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // si on met pas cette ligne, l'id va être créé par la bdd automatiquement; mais c'est une bonne pratique de le faire ici.
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // si je ne mets pas cette ligne, l'id va être créé par la bdd automatiquement; mais c'est une bonne pratique de le faire ici.
     title: String,
     description: String,
     price: Number,
@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
     thumbnail: String,
     createdAt: Date,
     updatedAt: Date,
-}); // schema less
+});
 const Product = mongoose.model('Product', schema);
 
 module.exports = Product
