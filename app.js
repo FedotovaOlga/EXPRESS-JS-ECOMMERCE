@@ -2,7 +2,7 @@ const express = require('express')
 const app = express() // objet app ==> methods
 const morgan = require('morgan')
 const path = require('path')
-const bodyParser = require('body-parser')
+const port = 4000
 const ejs = require('ejs')
 const productRouter = require('./routes/product')
 const mongoose = require('mongoose')
@@ -25,8 +25,20 @@ app.set('view engine', 'ejs')
 
 // routes
 app.use(productRouter);
+
+app.get('/', cors(), async (req, res)=>{
+    res.send('This is working')
+})
+
+app.post("/post_name", async (req, res)=>{
+    let {name} = req.body
+    console.log(name)
+    })
+
 app.use((req, res)=>{
     res.end('404')
 })
 
-app.listen(4000)
+app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`);
+})
