@@ -1,11 +1,9 @@
 const express = require('express')
 // const morgan = require('morgan')
-// const path = require('path')
-// const ejs = require('ejs')
 // const productRouter = require('./routes/product')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const bodyParser = require('body-parser')
+const productController = require('./controllers/product.controller.js');
 // const Product = require('./models/Product')
 
 const app = express() // objet app ==> methods
@@ -18,28 +16,17 @@ mongoose.connect(`mongodb://0.0.0.0:27017/projet` )
 
 // middlewares
 // app.use(morgan('dev')) // donne plus de choses et plus propre que logger(infos sur la meme ligne);
-// app.use(express.urlencoded({extended:true}))
-// app.use(express.static('public'))
-// app.use(express.json())
+app.use(express.json()) // la même chose que bodyParser
 app.use(cors())
-app.use(bodyParser.json())
-// app.set('view engine', 'ejs')
 
 // routes
-app.use(productRouter);
+// app.use(productRouter);
 
 app.get('/', cors(), async (req, res)=>{
     res.send('This is working')
 })
 
-app.post("/post_name", async (req, res)=>{
-    let {name} = req.body
-    console.log(name)
-    })
-
-app.get('/myhome', cors(), async (req, res)=>{
-    res.send('This is the data for the home page')
-})
+app.get('/products', cors(), productController.getAllProducts); 
 
 app.use((req, res)=>{
     res.end('404')
@@ -47,4 +34,26 @@ app.use((req, res)=>{
 
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
-})
+});
+
+
+// app.get('/products', cors(), async (req, res) => {
+//     try {
+//       const products = await getAllProducts(req, res); // Assurez-vous que cette fonction existe et renvoie les produits attendus
+//       res.json(products);
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send('Error retrieving products');
+//     }
+//   });
+
+
+// app.post("/post_name", async (req, res)=>{
+//     let {name} = req.body
+//     console.log(name)
+//     })
+
+// app.get('/myhome', cors(), async (req, res)=>{
+//     res.send('This is the data for the home page')
+// })
+
