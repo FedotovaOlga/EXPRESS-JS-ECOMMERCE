@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const productSchema = new Schema({
-    _id: { type: mongoose.Schema.Types.ObjectId, auto: true }, // si je ne mets pas cette ligne, l'id va être créé par la bdd automatiquement; mais c'est une bonne pratique de le faire ici.
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
     title: String,
     description: String,
     price: Number,
