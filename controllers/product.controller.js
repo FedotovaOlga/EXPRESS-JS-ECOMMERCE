@@ -13,35 +13,8 @@ const getAllProducts = async (req, res) => {
 
 // Add a new product
 const addNewProduct = async (req, res) => {
-  const {
-    title,
-    description,
-    price,
-    discountPercentage,
-    rating,
-    stock,
-    brand,
-    category,
-    thumbnail,
-    createdAt,
-    updatedAt,
-  } = req.body;
-
-  const newProduct = new Product({
-    title,
-    description,
-    price,
-    discountPercentage,
-    rating,
-    stock,
-    brand,
-    category,
-    thumbnail,
-    createdAt,
-    updatedAt,
-  });
-
-  try {
+  try{
+    const newProduct = new Product (req.body);
     await newProduct.save();
     console.log("product saved", newProduct);
     res.json(newProduct);
@@ -53,39 +26,23 @@ const addNewProduct = async (req, res) => {
 
 // Update a product
 const updateProduct = async (req, res) => {
-  const {
-    title,
-    description,
-    price,
-    discountPercentage,
-    rating,
-    stock,
-    brand,
-    category,
-    thumbnail,
-    createdAt,
-    updatedAt,
-  } = req.body;
-
+  console.log("Attempt to update product");
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
-      {
-        title,
-        description,
-        price,
-        discountPercentage,
-        rating,
-        stock,
-        brand,
-        category,
-        thumbnail,
-        createdAt,
-        updatedAt,
-      },
-      { new: true }
-    );
-    res.json(updatedProduct);
+    const productId = req.params.id;
+    const updateData = req.body;
+    const updatedProduct = await Product.findByIdAndUpdate(productId, updateData, {new: true});
+    console.log("Updating product with ID:", req.params.id);
+    console.log("Update data:", updateData);
+
+    if (!updatedProduct) {
+      console.log("Update data:", updateData);
+      console.log("Updating product with ID:", req.params.id);
+      return res.status(404).json({message: "Product not found"});
+    }
+
+    res.status(200).json(updatedProduct);
+    console.log("Updating product with ID:", req.params.id)
+    console.log("Update data:", updateData);;
   } catch (err) {
     res.status(400).json({ error: err.message });
     console.error("Erreur lors de la mise à jour du produit:", err);
@@ -95,7 +52,7 @@ const updateProduct = async (req, res) => {
 // Delete a product
 const deleteProduct = async (req, res) => {
   try {
-    await Product.findByIdAndRemove(req.params.id);
+    await Product.findByIdAndDelete(req.params.id);
     res.json({ id: req.params.id });
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -30,6 +30,8 @@ app.post("/products", cors(), productController.addNewProduct);
 
 app.delete("/products/:id", cors(), productController.deleteProduct);
 
+app.put("/products/:id", cors(), productController.updateProduct);
+
 app.use((req, res) => {
   res.end("404");
 });
